@@ -16,6 +16,11 @@
 
   border-radius: 10px;
 
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   background-color: aliceblue;
 }
 
@@ -37,4 +42,18 @@
   background-color: rgb(250, 238, 205);
 }
 
+.innerTile {
+  height: 12vh;
+  width: 6vw;
 
+  border-radius: 50px;
+}
+
+.blueTaken {
+  background-color: rgb(137, 200, 241);
+}
+
+.redTaken {
+  background-color: rgb(245, 159, 159);
+
+}

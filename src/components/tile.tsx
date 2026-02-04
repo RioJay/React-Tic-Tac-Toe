@@ -1,11 +1,22 @@
 import './../styles/home.css'
+import { useState } from 'react'
 
-export default function Tile( {colVal, rowVal} : {colVal: string, rowVal: string}) {
+// object to store the row and col state of the current tile
+export interface TilePosition {
+    colVal: string,
+    rowVal: string
+}
 
-    
+export default function Tile( {colVal, rowVal} : TilePosition ) {
+
+    const [tileClassList, setTileClassList] = useState(['tile', 'bgLBiege', 'unselected'])
+    const [innerTileClassList, setInnerTileClassList] = useState(['innerTile'])
+
 
     return (
-        <div className='tile bgLBiege unselected' data-col={colVal} data-row={rowVal}></div>
+        <div className={tileClassList.join(' ')} data-col={colVal} data-row={rowVal}>
+            <div className={innerTileClassList.join(' ')} />
+        </div>
     )
 
 }

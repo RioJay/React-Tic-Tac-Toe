@@ -1,0 +1,40 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.tile {
+  height: 20vh;
+  width: 10vw;
+
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+
+  border-radius: 10px;
+
+  background-color: aliceblue;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.bgLBiege {
+  background-color: rgb(247, 245, 236);
+}
+
+.unselected {
+  cursor: pointer;
+}
+
+.unselected:hover {
+  background-color: rgb(250, 238, 205);
+}
+
+

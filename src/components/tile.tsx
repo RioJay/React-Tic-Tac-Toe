@@ -10,10 +10,11 @@ export interface TilePosition {
 
 interface TileProps extends TilePosition {
     updateNextPlayer : () => void,
+    isGameOver : () => boolean,
     player : Player
 }
 
-export default function Tile( {colVal, rowVal, updateNextPlayer, player} : TileProps) {
+export default function Tile( {colVal, rowVal, updateNextPlayer, isGameOver, player} : TileProps) {
 
     const [tileClassList, setTileClassList] = useState(['tile', 'bgLBiege', 'unselected'])
     const [innerTileClassList, setInnerTileClassList] = useState(['innerTile'])
@@ -30,7 +31,9 @@ export default function Tile( {colVal, rowVal, updateNextPlayer, player} : TileP
         player.addNewPosition({colVal, rowVal});
 
         // check for victory or draw
-        // TODO
+        if( isGameOver() ) {
+            return;
+        }
 
         updateNextPlayer();
     }

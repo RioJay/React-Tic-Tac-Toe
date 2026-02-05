@@ -6,12 +6,58 @@ import { useState } from "react";
 // create the two player objects
 const players: Player[] = [new Player("bluePlayerColor"), new Player("redPlayerColor")];
 
+function hasPlayerWon( player: Player ) : boolean {
+    
+    const capturedPositions = player.getCapturedPositions();
+
+    const playerColRowCount : Record<string, number> = {};
+
+    for( let pos of capturedPositions ) {
+
+        playerColRowCount[pos.colVal] = playerColRowCount[pos.colVal] ? playerColRowCount[pos.colVal] + 1 : 1;
+        playerColRowCount[pos.rowVal] = playerColRowCount[pos.rowVal] ? playerColRowCount[pos.rowVal] + 1 : 1;
+
+
+        if( playerColRowCount[pos.colVal] === 3 || playerColRowCount[pos.rowVal] === 3) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 export default function TicTacToeHome() {
 
     const [playerPos, setPlayerPos] = useState(0);
+    const [victoryMessage, setVictoryMessage] = useState('');
 
     function updateNextPlayer() {
         setPlayerPos(playerPos === 0 ? 1 : 0);
+    }
+
+    /**
+     * Check for victory or draw
+     * game progresses if neither
+     * @returns 
+     */
+    function isGameOver() : boolean {
+        
+        if( hasPlayerWon( players[0] ) ) {
+            setVictoryMessage("Player 1 Won");
+            return true;
+        }
+
+        if( hasPlayerWon( players[1] ) ) {
+            setVictoryMessage("Player 2 Won");
+            return true;
+        }
+
+        // check for draw
+        // TODO
+
+        return false;
+
     }
 
     // redering the game tiles with data
@@ -25,6 +71,7 @@ export default function TicTacToeHome() {
                     colVal={colVal} 
                     rowVal={rowVal}
                     updateNextPlayer={updateNextPlayer}
+                    isGameOver={isGameOver}
                     player={players[playerPos]}
                 />
 
@@ -37,6 +84,7 @@ export default function TicTacToeHome() {
 
     return (
         <>
+            <h1 className="victoryMessage">{victoryMessage}</h1>
             {tiles}
         </>
     )

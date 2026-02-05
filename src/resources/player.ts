@@ -11,4 +11,9 @@ export default class Player {
     addNewPosition( position: TilePosition ) {
         this.capturedPositions.push( position )
     }
+
+    getCapturedPositions() {
+        return this.capturedPositions
+    }
+
 }

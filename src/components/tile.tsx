@@ -1,3 +1,4 @@
+import type Player from '../resources/player'
 import './../styles/home.css'
 import { useState } from 'react'
 
@@ -7,14 +8,35 @@ export interface TilePosition {
     rowVal: string
 }
 
-export default function Tile( {colVal, rowVal} : TilePosition ) {
+interface TileProps extends TilePosition {
+    updateNextPlayer : () => void,
+    player : Player
+}
+
+export default function Tile( {colVal, rowVal, updateNextPlayer, player} : TileProps) {
 
     const [tileClassList, setTileClassList] = useState(['tile', 'bgLBiege', 'unselected'])
     const [innerTileClassList, setInnerTileClassList] = useState(['innerTile'])
 
+    function tileCLickAction() {
+
+        // remove the unselected css class and add selected class
+        setTileClassList([ ...tileClassList.filter( item => item !== 'unselected'), 'selected' ]);
+
+        // set player color to inner tile
+        setInnerTileClassList([...innerTileClassList, player.playerColorClass]);
+
+        // push the tile details to player object
+        player.addNewPosition({colVal, rowVal});
+
+        // check for victory or draw
+        // TODO
+
+        updateNextPlayer();
+    }
 
     return (
-        <div className={tileClassList.join(' ')} data-col={colVal} data-row={rowVal}>
+        <div className={tileClassList.join(' ')} onClick={tileCLickAction}>
             <div className={innerTileClassList.join(' ')} />
         </div>
     )

@@ -1,14 +1,18 @@
 import "./../styles/home.css";
 import Tile from "./tile.tsx";
 import Player  from "../resources/player.ts";
+import { useState } from "react";
 
 // create the two player objects
-const players: Player[] = [new Player(), new Player()];
+const players: Player[] = [new Player("bluePlayerColor"), new Player("redPlayerColor")];
 
 export default function TicTacToeHome() {
 
-    const currentPlayer: Player = players[0];
+    const [playerPos, setPlayerPos] = useState(0);
 
+    function updateNextPlayer() {
+        setPlayerPos(playerPos === 0 ? 1 : 0);
+    }
 
     // redering the game tiles with data
     const tiles: React.ReactElement[] = ['A', 'B', 'C'].map( (colVal : string) => {
@@ -19,7 +23,9 @@ export default function TicTacToeHome() {
                 return <Tile 
                     key={colVal + rowVal} 
                     colVal={colVal} 
-                    rowVal={rowVal} 
+                    rowVal={rowVal}
+                    updateNextPlayer={updateNextPlayer}
+                    player={players[playerPos]}
                 />
 
             } );

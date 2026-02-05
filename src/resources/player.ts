@@ -1,7 +1,12 @@
 import type { TilePosition } from "../components/tile";
 
 export default class Player {
-    capturedPositions : TilePosition[] = []
+    private capturedPositions : TilePosition[] = []
+    playerColorClass : string
+
+    constructor(playerColorClass: string) {
+        this.playerColorClass = playerColorClass;
+    }
 
     addNewPosition( position: TilePosition ) {
         this.capturedPositions.push( position )

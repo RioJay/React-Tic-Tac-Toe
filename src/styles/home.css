@@ -42,6 +42,10 @@
   background-color: rgb(250, 238, 205);
 }
 
+.selected {
+  pointer-events: none;
+}
+
 .innerTile {
   height: 12vh;
   width: 6vw;
@@ -49,11 +53,11 @@
   border-radius: 50px;
 }
 
-.blueTaken {
-  background-color: rgb(137, 200, 241);
+.bluePlayerColor {
+  background-color: #89C8F1;
 }
 
-.redTaken {
-  background-color: rgb(245, 159, 159);
+.redPlayerColor {
+  background-color: #f59f9f;
 
 }

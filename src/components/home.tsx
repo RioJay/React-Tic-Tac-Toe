@@ -10,7 +10,10 @@ function hasPlayerWon( player: Player ) : boolean {
     
     const capturedPositions = player.getCapturedPositions();
 
-    const playerColRowCount : Record<string, number> = {};
+    const playerColRowCount : Record<string, number> = {
+        TLtoBR: 0,
+        BLtoTR: 0,
+    };
 
     // check straight vertical and horizontal positions
     for( let pos of capturedPositions ) {
@@ -18,14 +21,21 @@ function hasPlayerWon( player: Player ) : boolean {
         playerColRowCount[pos.colVal] = playerColRowCount[pos.colVal] ? playerColRowCount[pos.colVal] + 1 : 1;
         playerColRowCount[pos.rowVal] = playerColRowCount[pos.rowVal] ? playerColRowCount[pos.rowVal] + 1 : 1;
 
+        if( (pos.colVal === 'A' && pos.rowVal === '1') || (pos.colVal === 'B' && pos.rowVal === '2') || (pos.colVal === 'C' && pos.rowVal === '3') ) {
+            playerColRowCount['TLtoBR'] += 1;
+        }
 
-        if( playerColRowCount[pos.colVal] === 3 || playerColRowCount[pos.rowVal] === 3 ) {
+        if( (pos.colVal === 'C' && pos.rowVal === '1') || (pos.colVal === 'B' && pos.rowVal === '2') ||(pos.colVal === 'A' && pos.rowVal === '3') ) {
+            playerColRowCount['BLtoTR'] += 1;
+        }
+
+        if( playerColRowCount[pos.colVal] === 3 || playerColRowCount[pos.rowVal] === 3 || playerColRowCount['TLtoBR'] === 3 || playerColRowCount['BLtoTR'] === 3) {
             return true;
         }
     }
 
     // check diagonal positions
-
+    
 
     return false;
 }

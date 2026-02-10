@@ -12,18 +12,26 @@ function hasPlayerWon( player: Player ) : boolean {
 
     const playerColRowCount : Record<string, number> = {};
 
+    // check straight vertical and horizontal positions
     for( let pos of capturedPositions ) {
 
         playerColRowCount[pos.colVal] = playerColRowCount[pos.colVal] ? playerColRowCount[pos.colVal] + 1 : 1;
         playerColRowCount[pos.rowVal] = playerColRowCount[pos.rowVal] ? playerColRowCount[pos.rowVal] + 1 : 1;
 
 
-        if( playerColRowCount[pos.colVal] === 3 || playerColRowCount[pos.rowVal] === 3) {
+        if( playerColRowCount[pos.colVal] === 3 || playerColRowCount[pos.rowVal] === 3 ) {
             return true;
         }
     }
 
+    // check diagonal positions
+
+
     return false;
+}
+
+function checkDraw() : boolean {
+    return players[0].getCapturedPositions().length + players[1].getCapturedPositions().length === 9;
 }
 
 
@@ -54,10 +62,12 @@ export default function TicTacToeHome() {
         }
 
         // check for draw
-        // TODO
+        if( checkDraw() ){
+            setVictoryMessage("Match draw");
+            return true;
+        }
 
         return false;
-
     }
 
     // redering the game tiles with data

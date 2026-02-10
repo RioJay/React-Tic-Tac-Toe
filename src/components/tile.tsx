@@ -11,10 +11,11 @@ export interface TilePosition {
 interface TileProps extends TilePosition {
     updateNextPlayer : () => void,
     isGameOver : () => boolean,
-    player : Player
+    player : Player,
+    victorIdentifier : string
 }
 
-export default function Tile( {colVal, rowVal, updateNextPlayer, isGameOver, player} : TileProps) {
+export default function Tile( {colVal, rowVal, updateNextPlayer, isGameOver, player, victorIdentifier} : TileProps) {
 
     const [tileClassList, setTileClassList] = useState(['tile', 'bgLBiege', 'unselected'])
     const [innerTileClassList, setInnerTileClassList] = useState(['innerTile'])
@@ -32,10 +33,27 @@ export default function Tile( {colVal, rowVal, updateNextPlayer, isGameOver, pla
 
         // check for victory or draw
         if( isGameOver() ) {
+            document.getElementById('container')?.classList.add('selected');
             return;
         }
 
         updateNextPlayer();
+    }
+
+    if( victorIdentifier ) {
+        
+        if( !tileClassList.find( item => item === player.playerColorClass ) && (victorIdentifier === colVal || victorIdentifier === rowVal) ) {
+            setTileClassList( [...tileClassList.filter( item => item !== 'bgLBiege'), player.playerColorClass] );
+        }
+
+        if( victorIdentifier.toLowerCase() === 'tltobr' && ['A1', 'B2', 'C3'].find( item => item === colVal+rowVal ) && !tileClassList.find( item => item === player.playerColorClass ) ) {
+            setTileClassList( [...tileClassList.filter( item => item !== 'bgLBiege'), player.playerColorClass] );
+        }
+
+        if( victorIdentifier.toLowerCase() === 'bltotr' && ['A3', 'B2', 'C1'].find( item => item === colVal+rowVal ) && !tileClassList.find( item => item === player.playerColorClass ) ) {
+            setTileClassList( [...tileClassList.filter( item => item !== 'bgLBiege'), player.playerColorClass] );
+        }
+
     }
 
     return (
